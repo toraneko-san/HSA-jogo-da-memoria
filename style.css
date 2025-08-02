@@ -1,4 +1,43 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.conteudo {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  min-height: 100vh;
+}
+
+.cabecalho,
+.jogadores,
+.carta-ampliada,
+.resultado-classificacao,
+.inicio,
+.tabuleiro,
+.resultado-pares{
+  background-color: aqua;
+}
+
+.tabuleiro, .resultado-pares {
+  grid-row: 1 / span 3;
+}
+
+/* deixar essas classes no final do arquivo */
+@media (max-width: 992px) {
+  .conteudo {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, auto) 1fr;
+  }
+
+  .tabuleiro, .resultado-pares {
+    grid-row: initial;
+  }
+}
+
+.escondido {
+  display: none;
 }
