@@ -21,13 +21,13 @@
   display: grid;
 }
 
-.tabuleiro,
-.resultado-pares,
-.cabecalho,
-.jogadores,
-.resultado-classificacao,
-.carta-ampliada,
-.inicio {
+#tabuleiro,
+#resultado-pares,
+#cabecalho,
+#jogadores,
+#resultado-classificacao,
+#carta-ampliada,
+#inicio {
   background-color: aqua;
 }
 
