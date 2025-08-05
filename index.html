@@ -16,7 +16,24 @@
         <section class="inicio">inicio</section>
       </div>
       <div class="jogo">
-        <section class="tabuleiro">tabuleiro</section>
+        <section class="tabuleiro">
+          <div id="container">
+           <!--modelo de carta duplicada para par-->
+           <div class="carta" data-id="1"> <!-- pensando que talvez ajude no JS ru inseri esse data-id-->
+             <div class="carta-virada">
+                 <div class="frente">1</div> 
+                 <div class="verso">Texto A</div>
+             </div>
+           </div>
+           
+            <div class="carta" data-id="1">
+              <div class="carta-virada">
+                 <div class="frente">1</div>
+                 <div class="verso">Texto A</div>
+              </div>
+           </div>
+          </div>
+        </section>
         <section class="resultado-pares escondido">pares-completos</section>
       </div>
     </div>
