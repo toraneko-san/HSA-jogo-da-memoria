@@ -11,6 +11,16 @@ let turnoJogador = null;
 let cartasEmJogo = [];
 let cartasViradas = [];
 
+function iniciarJogo() {
+  turnoJogador = 0;
+  // esconder seção "inicio" e revelar seção "carta-ampliada"
+  ////
+  console.log("turnoJogador: ", turnoJogador);
+}
+
+// quando clicar no botão "Jogar", chamar função iniciarJogo()
+////
+
 // função carregarJogadores(): prepara a seção "jogadores" quando o site carregar
 // e atualiza pontuação durante o jogo
 function carregarJogadores() {
@@ -21,7 +31,19 @@ function carregarJogadores() {
   console.log("jogadores: ", jogadores);
 }
 
+// função carregarJogadores(): prepara a seção "tabuleiro" quando o site carregar
+// só é chamada no começo do jogo
+function carregarTabuleiro() {
+  embaralharCartas();
+  carregarCartas();
+}
+
+// preparar o jogo quando o site carregar
+carregarJogadores();
+carregarTabuleiro();
+
 // função embaralharCartas(): embaralha os pares e separa os pares em cartas individuaias
+// só é chamada no começo do jogo
 function embaralharCartas() {
   // se precisar limitar o número de cartas, fazer aqui
   // P.S.: randomizar a ordem dos pares
@@ -45,6 +67,7 @@ function embaralharCartas() {
 }
 
 // função carregarCartas(): mostra as cartas embaralhadas
+// só é chamada no começo do jogo
 function carregarCartas() {
   // selecionar a seção "tabuleiro"
   ////
@@ -54,6 +77,7 @@ function carregarCartas() {
   ////
 }
 
+// função virarCarta(): vira a carta quando o jogador seleciona uma carta
 function virarCarta(pos) {
   //
   const cartaInfo = cartasEmJogo[pos];
@@ -93,11 +117,16 @@ function virarCarta(pos) {
       ampliarCarta(textoCompleto);
     }
 
+    // checar se todos os pares foram encontrados
+    // se tiver, revelar botão "Fim do Jogo"
+
     // revelar botão "Próximo jogador"
     ////
   }
 }
 
+// função ampliarCartas(): mostra o texto completo da carta quando o jogador vira 
+// uma carta ou seleciona uma carta virada
 function ampliarCarta(texto) {
   console.log("cartaSelecionada: ", texto);
   // selecionar seção "carta-ampliada"
@@ -106,26 +135,14 @@ function ampliarCarta(texto) {
   ////
 }
 
+// função carregarCartas(): atualiza a pontuacao quando um jogador acerta um par
 function atualizarPontuacao() {
   jogadores[turnoJogador].pontuacao += 1;
   carregarJogadores();
 }
 
-function carregarTabuleiro() {
-  embaralharCartas();
-  carregarCartas();
-}
-
-function iniciarJogo() {
-  turnoJogador = 0;
-  // esconder seção "inicio" e revelar seção "carta-ampliada"
-  ////
-  console.log("turnoJogador: ", turnoJogador);
-}
-
-// quando clicar no botão "Jogar", chamar função iniciarJogo()
-////
-
+// função carregarCartas(): passa o turno para o próximo jogador e desvira ou 
+// esconde as cartas, dependendo se formou par ou não
 function passarTurno() {
   // deletar lista com as cartas viradas
   cartasViradas = [];
@@ -143,13 +160,7 @@ function passarTurno() {
 }
 
 // quando clicar no botão "Próx. Jogador", chamar função passarTurno()
-// const proxJogadorBotao = document.querySelector("#");
-// proxJogadorBotao.addEventListener("click", passarTurno);
 ////
-
-// preparar o jogo quando o site carregar
-carregarJogadores();
-carregarTabuleiro();
 
 // TESTE:
 // iniciarJogo();
