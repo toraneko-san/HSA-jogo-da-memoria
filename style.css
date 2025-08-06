@@ -31,36 +31,17 @@
 }
 
 /*elementos do tabuleiro*/
-.carta-pareada {
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
-
-.tabuleiro {
-  /*display: flex;*/
-  justify-content: center;
-  align-items: center;
-
-  background-color: white;
-}
 
 #container {
   display: grid;
-  /*grid-template-columns: 100px repeat(auto-fill, 100px) 100px;*/
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-
-  justify-content: center;
-  align-items: center;
-
+  gap: 5px;
+  padding: 10px;
   width: 100%;
   height: 100%;
 }
 
 .carta {
-  /*width: 100px;*/
-  height: 100px;
   perspective: 1000px;
   position: relative;
 }
@@ -90,14 +71,13 @@
   border: 1px solid #1971c2;
   color: #1971c2; /*do texto*/
   background-color: #a5d8ff;
-  text-align: center;
   padding: 10px;
   cursor: pointer;
 }
 
 .verso {
   transform: rotateY(180deg);
-  text-align: left;
+  justify-content: flex-start;
   cursor: zoom-in;
 }
 
