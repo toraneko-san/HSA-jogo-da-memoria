@@ -69,10 +69,22 @@ function embaralharCartas() {
 // função carregarCartas(): mostra as cartas embaralhadas
 // só é chamada no começo do jogo
 function carregarCartas() {
-  // selecionar a seção "tabuleiro"
-  ////
+  // selecionar o tabuleiro
+  const tabuleiro = document.querySelector("#container");
+  
   // mostrar as cartas
-  ////
+  for (let i = 0; i < cartasEmJogo.length; i++) {
+    const carta = cartasEmJogo[i];
+    tabuleiro.innerHTML += `
+      <div class="carta">
+         <div class="carta-virada">
+           <div class="frente">${i + 1}</div>
+           <div class="verso">${carta.texto}</div>
+        </div>
+      </div>
+    `;
+  }
+
   // adicionar função virarCarta() às cartas
   ////
 }
@@ -125,7 +137,7 @@ function virarCarta(pos) {
   }
 }
 
-// função ampliarCartas(): mostra o texto completo da carta quando o jogador vira 
+// função ampliarCartas(): mostra o texto completo da carta quando o jogador vira
 // uma carta ou seleciona uma carta virada
 function ampliarCarta(texto) {
   console.log("cartaSelecionada: ", texto);
@@ -141,7 +153,7 @@ function atualizarPontuacao() {
   carregarJogadores();
 }
 
-// função carregarCartas(): passa o turno para o próximo jogador e desvira ou 
+// função carregarCartas(): passa o turno para o próximo jogador e desvira ou
 // esconde as cartas, dependendo se formou par ou não
 function passarTurno() {
   // deletar lista com as cartas viradas
