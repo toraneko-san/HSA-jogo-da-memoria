@@ -46,3 +46,10 @@
 .escondido {
   display: none;
 }
+
+.Próximo{
+background-color: lightgreen ;
+border-color: black;
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+font-weight: bold;
+}
