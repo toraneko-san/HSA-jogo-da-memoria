@@ -1,34 +1,29 @@
+// Jogadores
+
 let jogadores = 
 [{nome: "Jogador 1", cor: "red", pontuacao: 0} ,
 {nome: "Jogador 2", cor: "green", pontuacao: 0},
 { nome: "Jogador 3", cor: "yellow", pontuacao: 0},
-{ nome: "Jogador 4", cor: "blue", pontuacao: 0 }]
+{ nome: "Jogador 4", cor: "blue", pontuacao: 0 }];
 
-let jogadorAtual = 0;
-let cartasViradas = [];
-let bloqueado = false;
+let jogadorAtual = 0; //Índice do jogador que está jogando
 
-// Exibe o nome e pontuação de todos os jogadores
+function mostrarPontuaco() {
+let container = document.querySelector(".jogadores");
+container.innerHTML="";
 
-function mostrarPontuacao() {
-  const container = document.querySelector(".jogadores"); // seleciona a div onde vai mostrar os jogadores
-  container.innerHTML = ""; // limpa o conteúdo antigo
-
-  jogadores.forEach((jogador, index) => {
-    const p = document.createElement("p"); // cria um parágrafo
-    p.innerText = `${jogador.nome}: ${jogador.pontuacao}`; // escreve nome + pontuação
-    p.style.color = index === jogadorAtual ? jogador.cor : "black"; // se for a vez dele, mostra na cor certa
-    container.appendChild(p); // adiciona o parágrafo na tela
-  });
+jogadores.forEach((jogador, index) => {
+let ativo = index === jogadorAtual ? "(jogando)" : "";
+container.innerHTML += `<p style="color: ${jogador.cor}">${jogador.nome}: ${jogador.pontuacao}${ativo}</p>`;
+});
 }
 
-// Atualiza pontuação SOMENTE se acertar
-function atualizarPontuacao(acertou) {
-  if (acertou) {
-    jogadores[jogadorAtual].pontuacao++;
+function verificarPar (foiPar) {
+  if (foiPar){
+jogadores [jogadorAtual]. pontuacao += 1;
+// continua jogando, então não muda o jogador
   } else {
-    jogadorAtual = (jogadorAtual + 1) % jogadores.length; // passa para o próximo jogador
+jogadorAtual = (jogadorAtual + 1) % jogadores.length;
   }
-
-  mostrarPontuacao();
+mostrarPontuaco ()
 }
