@@ -12,10 +12,15 @@ let cartasEmJogo = [];
 let cartasViradas = [];
 
 function iniciarJogo() {
-  turnoJogador = 0;
-  // esconder seção "inicio" e revelar seção "carta-ampliada"
-  ////
-  console.log("turnoJogador: ", turnoJogador);
+  turnoJogador = 0; 
+
+  document.querySelector(".inicio").classList.add("escondido"); //esconde o botão
+  document.querySelector(".carta-ampliada").classList.remove("escondido"); //revela a carta ampliada ou o que será usado
+
+  carregarJogadores();
+  carregarTabuleiro();
+
+  console.log("Jogo iniciado! Turno do jogador:", turnoJogador);
 }
 
 // quando clicar no botão "Jogar", chamar função iniciarJogo()
@@ -23,16 +28,15 @@ function iniciarJogo() {
 
 // função carregarJogadores(): prepara a seção "jogadores" quando o site carregar
 // e atualiza pontuação durante o jogo
+// só é chamada após ativação do botão de "Jogar"
+
 function carregarJogadores() {
-  // selecionar a seção "jogadores"
-  ////
-  // mostrar o nome e a pontuação de cada jogador
-  ////
-  console.log("jogadores: ", jogadores);
+  const secao = document.querySelector(".jogadores");
+  secao.innerHTML = jogadores
+  .map((j, i) => `<p>${j.nome}: ${j.pontuacao} ponto(s)</p>`)
+  .join("");
 }
 
-// função carregarJogadores(): prepara a seção "tabuleiro" quando o site carregar
-// só é chamada no começo do jogo
 function carregarTabuleiro() {
   embaralharCartas();
   carregarCartas();
@@ -90,45 +94,48 @@ function carregarCartas() {
 }
 
 // função virarCarta(): vira a carta quando o jogador seleciona uma carta
-function virarCarta(pos) {
-  //
-  const cartaInfo = cartasEmJogo[pos];
+      function virarCarta(pos) {
+       const cartaInfo = cartasEmJogo[pos];
+       const cartaEl = document.querySelectorAll(".carta")[pos];
 
-  // se duas cartas estiverem viradas e o jogador selecionar uma carta que
-  // não estiver virada, fazer nada
-  if (cartasViradas.length == 2 && false) {
-    return;
-  }
-  ////
+  // Impede clicar em carta já virada ou mais de duas
+  if (cartaEl.classList.contains("ativa") || cartasViradas.length === 2) return;
 
-  // se o jogador selecionar uma carta que já estiver virada, ampliar
-  // o texto na seção "carta-ampliada"
-  if (false) {
-    ampliarCarta(cartaInfo.texto);
-    return;
-  }
-  ////
+  cartaEl.classList.add("ativa");
+  cartasViradas.push({ info: cartaInfo, el: cartaEl });
 
-  // virar a carta selecionada e ampliar o texto na seção "carta-ampliada"
-  cartasViradas.push(cartaInfo);
-  console.log(cartasViradas);
   ampliarCarta(cartaInfo.texto);
-  ////
 
-  // se duas cartas estiverem viradas, verificar se forma par ou não
-  if (cartasViradas.length == 2) {
-    if (cartasViradas[0].parId == cartasViradas[1].parId) {
-      // adicionar ponto para o jogador
-      atualizarPontuacao();
+  if (cartasViradas.length === 2) {
+    const [c1, c2] = cartasViradas;
 
-      const parId = cartasViradas[1].parId;
+    if (c1.info.parId === c2.info.parId) {
+      // par feito
+      setTimeout(() => {
+      c1.el.classList.add("carta-pareada");
+      c2.el.classList.add("carta-pareada");
+      c1.el.style.visibility = "hidden";
+      c2.el.style.visibility = "hidden";
+
+      const parId = c1.info.parId;
       const textoCompleto =
         PARES[parId].textoCompleto +
-        "<br>" +
-        `Referência: ${PARES[parId].referenica}`;
-      ampliarCarta(textoCompleto);
-    }
+        "<br>Referência: " +
+        PARES[parId].referenica;
+        ampliarCarta(textoCompleto);
 
+        atualizarPontuacao();
+        cartasViradas = [];
+      }, 1000);
+    } else {
+      // não é par: desvirar
+      setTimeout(() => {
+      c1.el.classList.remove("ativa");
+      c2.el.classList.remove("ativa");
+      cartasViradas = [];
+      ampliarCarta("");
+      }, 1500);
+    }
     // checar se todos os pares foram encontrados
     // se tiver, revelar botão "Fim do Jogo"
 
