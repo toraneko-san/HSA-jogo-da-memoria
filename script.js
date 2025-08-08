@@ -94,9 +94,9 @@ function carregarCartas() {
 }
 
 // função virarCarta(): vira a carta quando o jogador seleciona uma carta
-      function virarCarta(pos) {
-       const cartaInfo = cartasEmJogo[pos];
-       const cartaEl = document.querySelectorAll(".carta")[pos];
+function virarCarta(pos) {
+  const cartaInfo = cartasEmJogo[pos];
+  const cartaEl = document.querySelectorAll(".carta")[pos];
 
   // Impede clicar em carta já virada ou mais de duas
   if (cartaEl.classList.contains("ativa") || cartasViradas.length === 2) return;
