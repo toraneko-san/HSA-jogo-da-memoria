@@ -17,13 +17,3 @@ let ativo = index === jogadorAtual ? "(jogando)" : "";
 container.innerHTML += `<p style="color: ${jogador.cor}">${jogador.nome}: ${jogador.pontuacao}${ativo}</p>`;
 });
 }
-
-function verificarPar (foiPar) {
-  if (foiPar){
-jogadores [jogadorAtual]. pontuacao += 1;
-// continua jogando, então não muda o jogador
-  } else {
-jogadorAtual = (jogadorAtual + 1) % jogadores.length;
-  }
-mostrarPontuaco ()
-}
