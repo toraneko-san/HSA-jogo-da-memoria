@@ -67,10 +67,11 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #1971c2;
-  color: #1971c2; /*do texto*/
-  background-color: #a5d8ff;
-  padding: 10px;
+  border: 6px double white; /*a borda com duas cores?*/
+  border-radius: 10px;
+  color: white;
+  font-weight: bold; /*para deixar em negrito igual no design*/
+  background-color: #408f8a;
   cursor: pointer;
 }
 
