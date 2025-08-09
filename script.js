@@ -70,7 +70,7 @@ function embaralharCartas() {
 // só é chamada no começo do jogo
 function carregarCartas() {
   // selecionar o tabuleiro
-  const tabuleiro = document.querySelector("#container");
+  const tabuleiro = document.querySelector(".tabuleiro");
   
   // mostrar as cartas
   for (let i = 0; i < cartasEmJogo.length; i++) {
