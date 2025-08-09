@@ -1,11 +1,11 @@
 import { PARES } from "./const.js";
 
-let jogadores = [
-  { nome: "Jogador 1", pontuacao: 0 },
-  { nome: "Jogador 2", pontuacao: 0 },
-  { nome: "Jogador 3", pontuacao: 0 },
-  { nome: "Jogador 4", pontuacao: 0 },
-];
+let jogadores = 
+[{nome: "Jogador 1", cor: "red", pontuacao: 0} ,
+{nome: "Jogador 2", cor: "green", pontuacao: 0},
+{ nome: "Jogador 3", cor: "yellow", pontuacao: 0},
+{ nome: "Jogador 4", cor: "blue", pontuacao: 0 }];
+
 let turnoJogador = null;
 
 let cartasEmJogo = [];
@@ -24,6 +24,13 @@ function iniciarJogo() {
 // função carregarJogadores(): prepara a seção "jogadores" quando o site carregar
 // e atualiza pontuação durante o jogo
 function carregarJogadores() {
+  let container = document.querySelector(".jogadores");
+  container.innerHTML="";
+
+  jogadores.forEach((jogador, index) => {
+  let ativo = index === jogadorAtual ? ">" : "";
+    container.innerHTML += `<p style="color: ${jogador.cor}">${ativo} ${jogador.nome}: ${jogador.pontuacao}</p>`;
+  });
   // selecionar a seção "jogadores"
   ////
   // mostrar o nome e a pontuação de cada jogador
