@@ -1,11 +1,11 @@
 import { PARES } from "./const.js";
 
-let jogadores = [
-  { nome: "Jogador 1", pontuacao: 0 },
-  { nome: "Jogador 2", pontuacao: 0 },
-  { nome: "Jogador 3", pontuacao: 0 },
-  { nome: "Jogador 4", pontuacao: 0 },
-];
+let jogadores = 
+[{nome: "Jogador 1", cor: "red", pontuacao: 0} ,
+{nome: "Jogador 2", cor: "green", pontuacao: 0},
+{ nome: "Jogador 3", cor: "yellow", pontuacao: 0},
+{ nome: "Jogador 4", cor: "blue", pontuacao: 0 }];
+
 let turnoJogador = null;
 
 let cartasEmJogo = [];
@@ -31,10 +31,18 @@ function iniciarJogo() {
 // só é chamada após ativação do botão de "Jogar"
 
 function carregarJogadores() {
-  const secao = document.querySelector(".jogadores");
-  secao.innerHTML = jogadores
-  .map((j, i) => `<p>${j.nome}: ${j.pontuacao} ponto(s)</p>`)
-  .join("");
+  let container = document.querySelector(".jogadores");
+  container.innerHTML="";
+
+  jogadores.forEach((jogador, index) => {
+  let ativo = index === jogadorAtual ? ">" : "";
+    container.innerHTML += `<p style="color: ${jogador.cor}">${ativo} ${jogador.nome}: ${jogador.pontuacao}</p>`;
+  });
+  // selecionar a seção "jogadores"
+  ////
+  // mostrar o nome e a pontuação de cada jogador
+  ////
+  console.log("jogadores: ", jogadores);
 }
 
 function carregarTabuleiro() {
@@ -74,7 +82,7 @@ function embaralharCartas() {
 // só é chamada no começo do jogo
 function carregarCartas() {
   // selecionar o tabuleiro
-  const tabuleiro = document.querySelector("#container");
+  const tabuleiro = document.querySelector(".tabuleiro");
   
   // mostrar as cartas
   for (let i = 0; i < cartasEmJogo.length; i++) {

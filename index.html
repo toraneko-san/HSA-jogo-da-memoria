@@ -4,24 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jogo da Memória</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="conteudo">
       <div class="controles">
-        <section class="cabecalho">cabecalho</section>
-        <section class="jogadores">jogadores</section>
-        <section class="resultado-classificacao escondido">
-          classificacao
+        <section class="cabecalho">
+          <h1>Jogo da Memória</h1>
+          <h2>
+            Ver. violências, negligências, trajetórias e condições de
+            vulnerabilidade
+          </h2>
         </section>
-        <section class="carta-ampliada">carta-ampliada</section>
-        <section class="inicio escondido">inicio</section>
+        <section class="jogadores">jogadores</section>
+        <section class="botoes">inicio/próx jogador/reiniciar</section>
       </div>
       <div class="jogo">
         <section class="tabuleiro">
-          <div id="container"></div>
         </section>
-        <section class="resultado-pares escondido">pares-completos</section>
+        <section class="resultado escondido">resultado</section>
       </div>
     </div>
     <script type="module" src="script.js"></script>
