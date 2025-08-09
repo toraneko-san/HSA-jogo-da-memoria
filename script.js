@@ -75,11 +75,12 @@ function carregarCartas() {
       // inserir uma imagem no verso
     } else {
       // inserir um texto no verso
+      // classe no número para a borda e fundo
       tabuleiro.innerHTML += `
         <div class="carta">
-           <div class="carta-virada">
-             <div class="frente">${i + 1}</div>
-             <div class="verso">${carta.conteudo}</div>
+          <div class="carta-virada">
+            <div class="frente"><p class="numero-borda">${i + 1}</p></div>
+            <div class="verso">${verso}</div>
           </div>
         </div>
       `;
