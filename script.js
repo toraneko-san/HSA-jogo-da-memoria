@@ -1,26 +1,23 @@
 import { PARES } from "./const.js";
 
-let jogadores = 
-[{nome: "Jogador 1", cor: "red", pontuacao: 0} ,
-{nome: "Jogador 2", cor: "green", pontuacao: 0},
-{ nome: "Jogador 3", cor: "yellow", pontuacao: 0},
-{ nome: "Jogador 4", cor: "blue", pontuacao: 0 }];
+let jogadores = [
+  { nome: "Jogador 1", cor: "red", pontuacao: 0 },
+  { nome: "Jogador 2", cor: "green", pontuacao: 0 },
+  { nome: "Jogador 3", cor: "yellow", pontuacao: 0 },
+  { nome: "Jogador 4", cor: "blue", pontuacao: 0 },
+];
 
-let turnoJogador = null;
+let jogadorAtual = 0;
 
 let cartasEmJogo = [];
 let cartasViradas = [];
 
+// função iniciarJogo(): inicia o jogo quando o jogador clicar no botão "Jogar"
 function iniciarJogo() {
-  turnoJogador = 0; 
-
-  document.querySelector(".inicio").classList.add("escondido"); //esconde o botão
-  document.querySelector(".carta-ampliada").classList.remove("escondido"); //revela a carta ampliada ou o que será usado
+  jogadorAtual = 0;
 
   carregarJogadores();
   carregarTabuleiro();
-
-  console.log("Jogo iniciado! Turno do jogador:", turnoJogador);
 }
 
 // quando clicar no botão "Jogar", chamar função iniciarJogo()
@@ -28,21 +25,14 @@ function iniciarJogo() {
 
 // função carregarJogadores(): prepara a seção "jogadores" quando o site carregar
 // e atualiza pontuação durante o jogo
-// só é chamada após ativação do botão de "Jogar"
-
 function carregarJogadores() {
   let container = document.querySelector(".jogadores");
-  container.innerHTML="";
+  container.innerHTML = "";
 
   jogadores.forEach((jogador, index) => {
-  let ativo = index === jogadorAtual ? ">" : "";
+    let ativo = index === jogadorAtual ? ">" : "";
     container.innerHTML += `<p style="color: ${jogador.cor}">${ativo} ${jogador.nome}: ${jogador.pontuacao}</p>`;
   });
-  // selecionar a seção "jogadores"
-  ////
-  // mostrar o nome e a pontuação de cada jogador
-  ////
-  console.log("jogadores: ", jogadores);
 }
 
 function carregarTabuleiro() {
@@ -51,22 +41,17 @@ function carregarTabuleiro() {
 }
 
 // preparar o jogo quando o site carregar
-carregarJogadores();
 carregarTabuleiro();
 
 // função embaralharCartas(): embaralha os pares e separa os pares em cartas individuaias
 // só é chamada no começo do jogo
 function embaralharCartas() {
-  // se precisar limitar o número de cartas, fazer aqui
-  // P.S.: randomizar a ordem dos pares
-  ////
-
   // separar cada par em duas cartas
   for (let i = 0; i < PARES.length; i++) {
     const par = PARES[i];
 
-    cartasEmJogo.push({ texto: par.carta1, parId: i });
-    cartasEmJogo.push({ texto: par.carta2, parId: i });
+    cartasEmJogo.push({ tipo: "texto", conteudo: par.texto, parId: i });
+    cartasEmJogo.push({ tipo: "imagem", conteudo: par.imagem, parId: i });
   }
 
   // randomizar a ordem das cartas
@@ -74,8 +59,6 @@ function embaralharCartas() {
     const j = Math.floor(Math.random() * (i + 1));
     [cartasEmJogo[i], cartasEmJogo[j]] = [cartasEmJogo[j], cartasEmJogo[i]];
   }
-
-  console.log("cartasEmJogo: ", cartasEmJogo);
 }
 
 // função carregarCartas(): mostra as cartas embaralhadas
@@ -83,22 +66,32 @@ function embaralharCartas() {
 function carregarCartas() {
   // selecionar o tabuleiro
   const tabuleiro = document.querySelector(".tabuleiro");
-  
+
   // mostrar as cartas
   for (let i = 0; i < cartasEmJogo.length; i++) {
     const carta = cartasEmJogo[i];
-    tabuleiro.innerHTML += `
-      <div class="carta">
-         <div class="carta-virada">
-           <div class="frente">${i + 1}</div>
-           <div class="verso">${carta.texto}</div>
+
+    if (carta.tipo == "imagem") {
+      // inserir uma imagem no verso
+    } else {
+      // inserir um texto no verso
+      tabuleiro.innerHTML += `
+        <div class="carta">
+           <div class="carta-virada">
+             <div class="frente">${i + 1}</div>
+             <div class="verso">${carta.conteudo}</div>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }
+
   }
 
   // adicionar função virarCarta() às cartas
-  ////
+  const cartasInseridas = document.querySelectorAll(".carta");
+  cartasInseridas.forEach((el, index) => {
+    el.addEventListener("click", () => virarCarta(index));
+  });
 }
 
 // função virarCarta(): vira a carta quando o jogador seleciona uma carta
@@ -112,38 +105,20 @@ function virarCarta(pos) {
   cartaEl.classList.add("ativa");
   cartasViradas.push({ info: cartaInfo, el: cartaEl });
 
-  ampliarCarta(cartaInfo.texto);
-
   if (cartasViradas.length === 2) {
     const [c1, c2] = cartasViradas;
 
+    // se formar par, as cartas não vão estar mais visíveis
+    // P.S.: se não fomrar par, as cartas vão ser desviradas quando passar turno
     if (c1.info.parId === c2.info.parId) {
       // par feito
       setTimeout(() => {
-      c1.el.classList.add("carta-pareada");
-      c2.el.classList.add("carta-pareada");
-      c1.el.style.visibility = "hidden";
-      c2.el.style.visibility = "hidden";
-
-      const parId = c1.info.parId;
-      const textoCompleto =
-        PARES[parId].textoCompleto +
-        "<br>Referência: " +
-        PARES[parId].referenica;
-        ampliarCarta(textoCompleto);
-
-        atualizarPontuacao();
-        cartasViradas = [];
+        c1.el.classList.add("carta-pareada");
+        c2.el.classList.add("carta-pareada");
       }, 1000);
-    } else {
-      // não é par: desvirar
-      setTimeout(() => {
-      c1.el.classList.remove("ativa");
-      c2.el.classList.remove("ativa");
-      cartasViradas = [];
-      ampliarCarta("");
-      }, 1500);
+      atualizarPontuacao();
     }
+
     // checar se todos os pares foram encontrados
     // se tiver, revelar botão "Fim do Jogo"
 
@@ -152,48 +127,33 @@ function virarCarta(pos) {
   }
 }
 
-// função ampliarCartas(): mostra o texto completo da carta quando o jogador vira
-// uma carta ou seleciona uma carta virada
-function ampliarCarta(texto) {
-  console.log("cartaSelecionada: ", texto);
-  // selecionar seção "carta-ampliada"
-  ////
-  // mostrar texto
-  ////
-}
-
-// função carregarCartas(): atualiza a pontuacao quando um jogador acerta um par
+// função atualizarPontuacao(): atualiza a pontuacao quando um jogador acerta um par
 function atualizarPontuacao() {
-  jogadores[turnoJogador].pontuacao += 1;
+  jogadores[jogadorAtual].pontuacao += 1;
   carregarJogadores();
 }
 
-// função carregarCartas(): passa o turno para o próximo jogador e desvira ou
+// função passarTurno(): passa o turno para o próximo jogador e desvira ou
 // esconde as cartas, dependendo se formou par ou não
 function passarTurno() {
+  // desvirar as cartas (só funciona se as cartas não tiverem formdo par)
+  const [c1, c2] = cartasViradas;
+
+  c1.el.classList.remove("ativa");
+  c2.el.classList.remove("ativa");
+
   // deletar lista com as cartas viradas
   cartasViradas = [];
 
-  // desvirar as cartas (só funciona se as cartas não tiverem formdo par)
-
-  //[ok] passar o turno para o próximo jogador
-  if (turnoJogador <= 3) {
-    turnoJogador += 1;
+  // passar o turno para o próximo jogador
+  if (jogadorAtual <= 3) {
+    jogadorAtual += 1;
   } else {
-    turnoJogador = 0;
+    jogadorAtual = 0;
   }
-  console.log("cartasViradas: ", cartasViradas);
-  console.log("turnoJogador: ", turnoJogador);
+
+  carregarJogadores();
 }
 
 // quando clicar no botão "Próx. Jogador", chamar função passarTurno()
 ////
-
-// TESTE:
-// iniciarJogo();
-// virarCarta(0);
-// virarCarta(1);
-// virarCarta(0);
-// virarCarta(2);
-// virarCarta(3);
-// passarTurno();
