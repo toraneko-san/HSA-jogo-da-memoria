@@ -1,14 +1,14 @@
 export const PARES = [
   {
-    carta1: "ABCDE...",
-    carta2: "...FGHIJ",
-    textoCompleto: "ABCDEFGHIJ",
-    referenica: "Voz da minha mente",
+    texto: "ABCDE...",
+    imagem: "img-fundo.png",
   },
   {
-    carta1: "12345...",
-    carta2: "...678910",
-    textoCompleto: "12345678910",
-    referenica: "Voz da minha mente",
+    texto: "12345...",
+    imagem: "img-fundo.png",
   },
+  {
+    texto: "ABCDE...",
+    imagem: "img-fundo.png",
+  }
 ];
