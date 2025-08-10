@@ -37,6 +37,12 @@ h2 {
   justify-content: flex-end;
 }
 
+.jogadores pre{
+font-size: 40px;
+
+
+}
+
 .caixa {
   border: 2px solid black;
   border-radius: 5px;

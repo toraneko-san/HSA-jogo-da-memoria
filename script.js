@@ -1,10 +1,10 @@
 import { PARES } from "./const.js";
 
 let jogadores = [
-  { nome: "Jogador 1", cor: "red", pontuacao: 0 },
-  { nome: "Jogador 2", cor: "green", pontuacao: 0 },
-  { nome: "Jogador 3", cor: "yellow", pontuacao: 0 },
-  { nome: "Jogador 4", cor: "blue", pontuacao: 0 },
+  { nome: "Jogador 1", cor:"#408f8a", pontuacao: 0 },
+  { nome: "Jogador 2", cor: "#000000", pontuacao: 0 },
+  { nome: "Jogador 3", cor: "#34a203", pontuacao: 0 },
+  { nome: "Jogador 4", cor: "737373", pontuacao: 0 },
 ];
 
 // DESCOMENTAR DPS DE FAZER O BOTÃO DE INICIAR
@@ -30,11 +30,17 @@ function iniciarJogo() {
 function carregarJogadores() {
   let container = document.querySelector(".jogadores");
   container.innerHTML = "";
-
+let texto= "";
   jogadores.forEach((jogador, index) => {
     let ativo = index === jogadorAtual ? ">" : "";
-    container.innerHTML += `<p style="color: ${jogador.cor}">${ativo} ${jogador.nome}: ${jogador.pontuacao}</p>`;
+    texto += `<pre style="color: ${jogador.cor}">${ativo} ${jogador.nome}        Pontuação: ${jogador.pontuacao}</pre>`;
   });
+container.innerHTML = `
+ <div class="caixa">
+        <div class="caixa">
+        ${texto}
+        </div>
+      </div>`
 }
 
 function carregarTabuleiro() {
