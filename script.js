@@ -1,7 +1,7 @@
 import { PARES } from "./const.js";
 
 let jogadores = [
-  { nome: "Jogador 1", cor:"#408f8a", pontuacao: 0 },
+  { nome: "Jogador 1", cor: "#408f8a", pontuacao: 0 },
   { nome: "Jogador 2", cor: "#000000", pontuacao: 0 },
   { nome: "Jogador 3", cor: "#34a203", pontuacao: 0 },
   { nome: "Jogador 4", cor: "737373", pontuacao: 0 },
@@ -28,19 +28,24 @@ function iniciarJogo() {
 // função carregarJogadores(): prepara a seção "jogadores" quando o site carregar
 // e atualiza pontuação durante o jogo
 function carregarJogadores() {
+  if (jogadorAtual == null) return;
+
   let container = document.querySelector(".jogadores");
   container.innerHTML = "";
-let texto= "";
+
+  let texto = "";
   jogadores.forEach((jogador, index) => {
     let ativo = index === jogadorAtual ? ">" : "";
-    texto += `<pre style="color: ${jogador.cor}">${ativo} ${jogador.nome}        Pontuação: ${jogador.pontuacao}</pre>`;
+    texto += `<pre style="color: ${jogador.cor}">${ativo} ${jogador.nome}     Pontuação: ${jogador.pontuacao}</pre>`;
   });
-container.innerHTML = `
- <div class="caixa">
-        <div class="caixa">
+
+  container.innerHTML = `
+    <div class="caixa">
+      <div class="caixa">
         ${texto}
-        </div>
-      </div>`
+      </div>
+    </div>
+  `;
 }
 
 function carregarTabuleiro() {
@@ -121,8 +126,7 @@ function carregarCartas() {
 
 // função virarCarta(): vira a carta quando o jogador seleciona uma carta
 function virarCarta(pos) {
-  // DESCOMENTAR DPS DE FAZER O BOTÃO DE INICIAR
-  // if (jogadorAtual == null) return;
+  if (jogadorAtual == null) return;
 
   const cartaInfo = cartasEmJogo[pos];
   const cartaEl = document.querySelectorAll(".carta")[pos];
@@ -148,8 +152,8 @@ function virarCarta(pos) {
         c1.el.classList.add("carta-pareada");
         c2.el.classList.add("carta-pareada");
         mostrarParFormado(c1.info.parId);
+        atualizarPontuacao();
       }, 1000);
-      atualizarPontuacao();
     }
 
     // checar se todos os pares foram encontrados
@@ -179,17 +183,17 @@ function semiAmpliarCarta(pos) {
 function ampliarCarta(pos) {
   const cartaInfo = cartasEmJogo[pos];
   const overlay = document.querySelector(".overlay");
-  
+
   overlay.classList.remove("escondido");
   overlay.innerHTML = `
-  <div class="caixa carta-ampliada">
-  <div class="caixa">
-  <div class="botao-fechar">X</div>
-  <img src="assets/${cartaInfo.conteudo}" />
-  </div>
-  </div>
+    <div class="caixa carta-ampliada">
+      <div class="caixa">
+        <div class="botao-fechar">X</div>
+        <img src="assets/${cartaInfo.conteudo}" />
+      </div>
+    </div>
   `;
-  
+
   const fecharBotao = document.querySelector(".botao-fechar");
   overlay.addEventListener("click", esconderOverlay);
   fecharBotao.addEventListener("click", esconderOverlay);
