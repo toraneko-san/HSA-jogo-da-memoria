@@ -121,11 +121,15 @@ function virarCarta(pos) {
   const cartaInfo = cartasEmJogo[pos];
   const cartaEl = document.querySelectorAll(".carta")[pos];
 
+  if (cartaEl.classList.contains("ativa") && cartaInfo.tipo == "imagem") {
+    ampliarCarta(pos);
+  }
+
   // Impede clicar em carta já virada ou mais de duas
   if (cartaEl.classList.contains("ativa") || cartasViradas.length === 2) return;
 
   cartaEl.classList.add("ativa");
-  cartasViradas.push({ info: {...cartaInfo, id: pos}, el: cartaEl });
+  cartasViradas.push({ info: { ...cartaInfo, id: pos }, el: cartaEl });
 
   if (cartasViradas.length === 2) {
     const [c1, c2] = cartasViradas;
@@ -156,13 +160,41 @@ function semiAmpliarCarta(pos) {
   cartasViradas.forEach((item) => {
     if (item.el.classList.contains("ativa") && item.info.id == pos) {
       document.querySelector(".jogadores").innerHTML = `
-      <div class="caixa img-semi-ampliada">
+      <div class="caixa carta-semi-ampliada">
         <div class="caixa">
-          <img src="assets/${cartaInfo.conteudo}" alt="" />
+          <img src="assets/${cartaInfo.conteudo}" />
         </div>
       </div>`;
     }
   });
+}
+
+function ampliarCarta(pos) {
+  const cartaInfo = cartasEmJogo[pos];
+  const overlay = document.querySelector(".overlay");
+
+  overlay.classList.remove("escondido");
+  overlay.innerHTML = `
+    <div class="caixa carta-ampliada">
+      <div class="caixa">
+        <div class="botao-fechar">X</div>
+        <img src="assets/${cartaInfo.conteudo}" />
+      </div>
+    </div>
+  `;
+
+  const fecharBotao = document.querySelector(".botao-fechar");
+
+  overlay.addEventListener("click", esconderOverlay);
+  fecharBotao.addEventListener("click", esconderOverlay);
+}
+
+function esconderOverlay(event) {
+  if (event.target != event.currentTarget) return;
+
+  const overlay = document.querySelector(".overlay");
+
+  overlay.classList.add("escondido");
 }
 
 // função atualizarPontuacao(): atualiza a pontuacao quando um jogador acerta um par

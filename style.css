@@ -49,14 +49,59 @@ h2 {
   height: 100%;
 }
 
-.caixa.img-semi-ampliada {
+.caixa.carta-semi-ampliada {
   position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  width: 100%;
+  width: 80%;
 }
+
+.overlay {
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.overlay:hover {
+  cursor: pointer;
+}
+
+.caixa.carta-ampliada {
+  position: relative;
+  height: 95%;
+  width: 70%;
+}
+
+.caixa.carta-ampliada:hover {
+  cursor: auto;
+}
+
+.caixa.carta-ampliada .caixa {
+  display: grid;
+  grid-template-rows: 10% 90%;
+}
+
+.botao-fechar {
+  margin-left: auto;
+  padding: 0 20px 10px 20px;
+  font-size: 48px;
+  color: red;
+}
+
+.botao-fechar:hover {
+  color: crimson;
+  cursor: pointer;
+  transform: scale(1.3);
+}
+
 
 img {
   width: 100%;
