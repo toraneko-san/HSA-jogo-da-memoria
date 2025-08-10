@@ -2,11 +2,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Mozilla Headline", sans-serif;;
+  font-family: "Mozilla Headline", sans-serif;
 }
 
 h1 {
-  color: #408f8a
+  color: #408f8a;
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 24px;
 }
 
 .conteudo {
@@ -22,7 +27,102 @@ h1 {
 .controles {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 10px;
+  gap: 40px;
+}
+
+.jogadores {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.caixa {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: white;
+}
+
+.caixa .caixa {
+  border-width: 4px;
+  height: 100%;
+  width: 100%;
+}
+
+.caixa.carta-semi-ampliada {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 80%;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.overlay:hover {
+  cursor: pointer;
+}
+
+.caixa.carta-ampliada {
+  position: relative;
+  height: 95%;
+  width: 70%;
+}
+
+.caixa.carta-ampliada:hover {
+  cursor: auto;
+}
+
+.caixa.carta-ampliada .caixa {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "par botao"
+    "img ."
+    "texto .";
+}
+
+.botao-fechar {
+  grid-area: botao;
+  margin-left: auto;
+  padding: 0 20px 10px 20px;
+  font-size: 48px;
+  color: red;
+}
+
+.botao-fechar:hover {
+  color: crimson;
+  cursor: pointer;
+  transform: scale(1.3);
+}
+
+.caixa.carta-ampliada h2 {
+  grid-area: texto;
+  padding: 10px;
+  text-align: center;
+  font-size: 48px;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+img {
+  grid-area: img;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  overflow: hidden;
 }
 
 .jogo {
@@ -33,7 +133,7 @@ h1 {
 
 .tabuleiro {
   display: grid;
-  grid-template: repeat(5, 1fr) / repeat(4,1fr);
+  grid-template: repeat(5, 1fr) / repeat(4, 1fr);
   gap: 10px;
   padding: 10px;
   width: 100%;
@@ -48,7 +148,7 @@ h1 {
 .carta-virada {
   width: 100%;
   height: 100%;
-  transition: transform 1.5s; /*um pouco lenta demais?*/
+  transition: transform 1s;
   transform-style: preserve-3d;
   position: relative;
 }
@@ -67,17 +167,45 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #1971c2;
-  color: #1971c2; /*do texto*/
-  background-color: #a5d8ff;
-  padding: 10px;
+  border: 6px double white; /*a borda com duas cores?*/
+  border-radius: 10px;
+  color: white;
+  font-weight: bold; /*para deixar em negrito igual no design*/
+  background-color: #408f8a;
   cursor: pointer;
+}
+
+.frente:hover {
+  background-color: #006a6a; /*mudar cor*/
+  transform: scale(1.01);
 }
 
 .verso {
   transform: rotateY(180deg);
   justify-content: flex-start;
   cursor: zoom-in;
+  background-color: white;
+  border: 3px solid #408f8a;
+  padding: 10px;
+  color: black;
+  font-weight: bold;
+}
+
+.numero-borda {
+  background-color: #2e4b43;
+  border: 1px solid white;
+  border-radius: 100%;
+
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.frente:hover .numero-borda {
+  background-color: #002323;
 }
 
 /*também para o JS*/
@@ -101,4 +229,27 @@ h1 {
 
 .escondido {
   display: none;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    font-weight: bold;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.texto-bounce {
+  grid-area: par;
+  text-align: center;
+  font-size: 48px;
+  color: #408f8a;
+  animation: bounce;
+  animation-duration: 1s;
+  animation-timing-function: linear;
 }

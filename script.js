@@ -7,6 +7,8 @@ let jogadores = [
   { nome: "Jogador 4", cor: "blue", pontuacao: 0 },
 ];
 
+// DESCOMENTAR DPS DE FAZER O BOTÃO DE INICIAR
+// let jogadorAtual = null;
 let jogadorAtual = 0;
 
 let cartasEmJogo = [];
@@ -73,18 +75,26 @@ function carregarCartas() {
 
     if (carta.tipo == "imagem") {
       // inserir uma imagem no verso
-    } else {
-      // inserir um texto no verso
       tabuleiro.innerHTML += `
         <div class="carta">
-           <div class="carta-virada">
-             <div class="frente">${i + 1}</div>
-             <div class="verso">${carta.conteudo}</div>
+          <div class="carta-virada">
+            <div class="frente"><p class="numero-borda">${i + 1}</p></div>
+            <div class="verso"><img src="assets/${carta.conteudo}"/></div>
+          </div>
+        </div>
+      `;
+    } else {
+      // inserir um texto no verso
+      // classe no número para a borda e fundo
+      tabuleiro.innerHTML += `
+        <div class="carta">
+          <div class="carta-virada">
+            <div class="frente"><p class="numero-borda">${i + 1}</p></div>
+            <div class="verso">${carta.conteudo}</div>
           </div>
         </div>
       `;
     }
-
   }
 
   // adicionar função virarCarta() às cartas
@@ -92,18 +102,34 @@ function carregarCartas() {
   cartasInseridas.forEach((el, index) => {
     el.addEventListener("click", () => virarCarta(index));
   });
+
+  cartasInseridas.forEach((el, index) => {
+    const cartaInfo = cartasEmJogo[index];
+
+    if (cartaInfo.tipo == "imagem") {
+      el.addEventListener("mouseover", () => semiAmpliarCarta(index));
+      el.addEventListener("mouseout", carregarJogadores);
+    }
+  });
 }
 
 // função virarCarta(): vira a carta quando o jogador seleciona uma carta
 function virarCarta(pos) {
+  // DESCOMENTAR DPS DE FAZER O BOTÃO DE INICIAR
+  // if (jogadorAtual == null) return;
+
   const cartaInfo = cartasEmJogo[pos];
   const cartaEl = document.querySelectorAll(".carta")[pos];
+
+  if (cartaEl.classList.contains("ativa") && cartaInfo.tipo == "imagem") {
+    ampliarCarta(pos);
+  }
 
   // Impede clicar em carta já virada ou mais de duas
   if (cartaEl.classList.contains("ativa") || cartasViradas.length === 2) return;
 
   cartaEl.classList.add("ativa");
-  cartasViradas.push({ info: cartaInfo, el: cartaEl });
+  cartasViradas.push({ info: { ...cartaInfo, id: pos }, el: cartaEl });
 
   if (cartasViradas.length === 2) {
     const [c1, c2] = cartasViradas;
@@ -115,6 +141,7 @@ function virarCarta(pos) {
       setTimeout(() => {
         c1.el.classList.add("carta-pareada");
         c2.el.classList.add("carta-pareada");
+        mostrarParFormado(c1.info.parId);
       }, 1000);
       atualizarPontuacao();
     }
@@ -125,6 +152,74 @@ function virarCarta(pos) {
     // revelar botão "Próximo jogador"
     ////
   }
+}
+
+// função semiAmpliarCarta()
+function semiAmpliarCarta(pos) {
+  const cartaInfo = cartasEmJogo[pos];
+
+  cartasViradas.forEach((item) => {
+    if (item.el.classList.contains("ativa") && item.info.id == pos) {
+      document.querySelector(".jogadores").innerHTML = `
+      <div class="caixa carta-semi-ampliada">
+        <div class="caixa">
+          <img src="assets/${cartaInfo.conteudo}" />
+        </div>
+      </div>`;
+    }
+  });
+}
+
+function ampliarCarta(pos) {
+  const cartaInfo = cartasEmJogo[pos];
+  const overlay = document.querySelector(".overlay");
+  
+  overlay.classList.remove("escondido");
+  overlay.innerHTML = `
+  <div class="caixa carta-ampliada">
+  <div class="caixa">
+  <div class="botao-fechar">X</div>
+  <img src="assets/${cartaInfo.conteudo}" />
+  </div>
+  </div>
+  `;
+  
+  const fecharBotao = document.querySelector(".botao-fechar");
+  overlay.addEventListener("click", esconderOverlay);
+  fecharBotao.addEventListener("click", esconderOverlay);
+}
+
+function mostrarParFormado(parId) {
+  const parInfo = PARES[parId];
+  const overlay = document.querySelector(".overlay");
+
+  overlay.classList.remove("escondido");
+  overlay.innerHTML = `
+    <div class="caixa carta-ampliada">
+      <div class="caixa">
+        <div class="botao-fechar">X</div>
+        <p class="texto-bounce">Par formado!</p>
+        <img src="assets/${parInfo.imagem}" />
+        <h2>${parInfo.texto}</h2>
+      </div>
+    </div>
+  `;
+
+  const fecharBotao = document.querySelector(".botao-fechar");
+
+  overlay.addEventListener("click", esconderOverlay);
+  fecharBotao.addEventListener("click", esconderOverlay);
+}
+
+function esconderOverlay(event) {
+  if (event.target != event.currentTarget) return;
+
+  const overlay = document.querySelector(".overlay");
+  const fecharBotao = document.querySelector(".botao-fechar");
+
+  overlay.classList.add("escondido");
+  overlay.removeEventListener("click", esconderOverlay);
+  fecharBotao.removeEventListener("click", esconderOverlay);
 }
 
 // função atualizarPontuacao(): atualiza a pontuacao quando um jogador acerta um par
