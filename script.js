@@ -7,28 +7,32 @@ let jogadores = [
   { nome: "Jogador 4", cor: "737373", pontuacao: 0 },
 ];
 
-// DESCOMENTAR DPS DE FAZER O BOTÃO DE INICIAR
-// let jogadorAtual = null;
-let jogadorAtual = 0;
+let jogadorAtual;
 
 let cartasEmJogo = [];
 let cartasViradas = [];
 
 // função iniciarJogo(): inicia o jogo quando o jogador clicar no botão "Jogar"
 function iniciarJogo() {
+  jogadores = jogadores.map((jogador) => ({ ...jogador, pontuacao: 0 }));
   jogadorAtual = 0;
+  cartasEmJogo = [];
+  cartasViradas = [];
 
   carregarJogadores();
   carregarTabuleiro();
+
+  document.querySelector(".botoes").innerHTML = "";
 }
 
 // quando clicar no botão "Jogar", chamar função iniciarJogo()
+document.querySelector(".botao-jogar").addEventListener("click", iniciarJogo);
 ////
 
 // função carregarJogadores(): prepara a seção "jogadores" quando o site carregar
 // e atualiza pontuação durante o jogo
 function carregarJogadores() {
-  if (jogadorAtual == null) return;
+  if (jogadorAtual === undefined) return;
 
   let container = document.querySelector(".jogadores");
   container.innerHTML = "";
@@ -79,6 +83,7 @@ function embaralharCartas() {
 function carregarCartas() {
   // selecionar o tabuleiro
   const tabuleiro = document.querySelector(".tabuleiro");
+  tabuleiro.innerHTML = "";
 
   // mostrar as cartas
   for (let i = 0; i < cartasEmJogo.length; i++) {
@@ -141,25 +146,50 @@ function virarCarta(pos) {
   cartaEl.classList.add("ativa");
   cartasViradas.push({ info: { ...cartaInfo, id: pos }, el: cartaEl });
 
+  if (cartaInfo.tipo == "imagem") {
+    semiAmpliarCarta(pos);
+  }
+
   if (cartasViradas.length === 2) {
     const [c1, c2] = cartasViradas;
 
     // se formar par, as cartas não vão estar mais visíveis
     // P.S.: se não fomrar par, as cartas vão ser desviradas quando passar turno
     if (c1.info.parId === c2.info.parId) {
+      jogadores[jogadorAtual].pontuacao += 1;
       // par feito
       setTimeout(() => {
         c1.el.classList.add("carta-pareada");
         c2.el.classList.add("carta-pareada");
         mostrarParFormado(c1.info.parId);
-        atualizarPontuacao();
+        carregarJogadores();
       }, 1000);
+
+      // checar se todos os pares foram encontrados
+      // se tiver, revelar botão "Fim do Jogo"
+      const numParesFormados = jogadores.reduce(
+        (soma, jogador) => soma + jogador.pontuacao,
+        0
+      );
+
+      if (numParesFormados == PARES.length) {
+        document.querySelector(".botoes").innerHTML = `
+          <button class="botao-fim">FIM DO JOGO!</button>
+        `;
+
+        mostrarResultado();
+        return;
+      }
     }
 
-    // checar se todos os pares foram encontrados
-    // se tiver, revelar botão "Fim do Jogo"
-
     // revelar botão "Próximo jogador"
+    document.querySelector(".botoes").innerHTML = `
+      <button class="botao-proximo">PRÓX. JOGADOR</button>
+    `;
+
+    document
+      .querySelector(".botao-proximo")
+      .addEventListener("click", passarTurno);
     ////
   }
 }
@@ -232,16 +262,9 @@ function esconderOverlay(event) {
   fecharBotao.removeEventListener("click", esconderOverlay);
 }
 
-// função atualizarPontuacao(): atualiza a pontuacao quando um jogador acerta um par
-function atualizarPontuacao() {
-  jogadores[jogadorAtual].pontuacao += 1;
-  carregarJogadores();
-}
-
 // função passarTurno(): passa o turno para o próximo jogador e desvira ou
 // esconde as cartas, dependendo se formou par ou não
 function passarTurno() {
-  // desvirar as cartas (só funciona se as cartas não tiverem formdo par)
   const [c1, c2] = cartasViradas;
 
   c1.el.classList.remove("ativa");
@@ -251,14 +274,27 @@ function passarTurno() {
   cartasViradas = [];
 
   // passar o turno para o próximo jogador
-  if (jogadorAtual <= 3) {
+  if (jogadorAtual < 3) {
     jogadorAtual += 1;
   } else {
     jogadorAtual = 0;
   }
 
   carregarJogadores();
+
+  // esconder o botão "Próx. Jogador"
+  document.querySelector(".botoes").innerHTML = "";
 }
 
-// quando clicar no botão "Próx. Jogador", chamar função passarTurno()
-////
+function mostrarResultado() {
+  jogadorAtual = null;
+  carregarJogadores();
+
+  document.querySelector(".botoes").innerHTML = `
+    <button class="botao-reiniciar">REINICIAR</button>
+  `;
+
+  document
+    .querySelector(".botao-reiniciar")
+    .addEventListener("click", iniciarJogo);
+}
