@@ -2,11 +2,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Mozilla Headline", sans-serif;;
+  font-family: "Mozilla Headline", sans-serif;
 }
 
 h1 {
-  color: #408f8a
+  color: #408f8a;
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 24px;
 }
 
 .conteudo {
@@ -33,7 +38,7 @@ h1 {
 
 .tabuleiro {
   display: grid;
-  grid-template: repeat(5, 1fr) / repeat(4,1fr);
+  grid-template: repeat(5, 1fr) / repeat(4, 1fr);
   gap: 10px;
   padding: 10px;
   width: 100%;
@@ -76,10 +81,9 @@ h1 {
 }
 
 .frente:hover {
-  background-color: #508f8a; /*mudar cor*/
+  background-color: #006a6a; /*mudar cor*/
   transform: scale(1.01);
 }
-
 
 .verso {
   transform: rotateY(180deg);
@@ -88,20 +92,24 @@ h1 {
   background-color: white;
   border: 3px solid #408f8a;
   color: black;
-  font-weight: bold; 
+  font-weight: bold;
 }
 
-.numero-borda { 
+.numero-borda {
   background-color: #2e4b43;
   border: 1px solid white;
   border-radius: 100%;
-      
+
   width: 50px;
   height: 50px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.frente:hover .numero-borda {
+  background-color: #002323;
 }
 
 /*também para o JS*/

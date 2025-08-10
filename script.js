@@ -7,6 +7,8 @@ let jogadores = [
   { nome: "Jogador 4", cor: "blue", pontuacao: 0 },
 ];
 
+// DESCOMENTAR DPS DE FAZER O BOTÃO DE INICIAR
+// let jogadorAtual = null;
 let jogadorAtual = 0;
 
 let cartasEmJogo = [];
@@ -80,12 +82,11 @@ function carregarCartas() {
         <div class="carta">
           <div class="carta-virada">
             <div class="frente"><p class="numero-borda">${i + 1}</p></div>
-            <div class="verso">${verso}</div>
+            <div class="verso">${carta.conteudo}</div>
           </div>
         </div>
       `;
     }
-
   }
 
   // adicionar função virarCarta() às cartas
@@ -97,6 +98,9 @@ function carregarCartas() {
 
 // função virarCarta(): vira a carta quando o jogador seleciona uma carta
 function virarCarta(pos) {
+  // DESCOMENTAR DPS DE FAZER O BOTÃO DE INICIAR
+  // if (jogadorAtual == null) return;
+
   const cartaInfo = cartasEmJogo[pos];
   const cartaEl = document.querySelectorAll(".carta")[pos];
 
