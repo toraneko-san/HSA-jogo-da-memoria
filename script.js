@@ -141,6 +141,7 @@ function virarCarta(pos) {
       setTimeout(() => {
         c1.el.classList.add("carta-pareada");
         c2.el.classList.add("carta-pareada");
+        mostrarParFormado(c1.info.parId);
       }, 1000);
       atualizarPontuacao();
     }
@@ -172,13 +173,34 @@ function semiAmpliarCarta(pos) {
 function ampliarCarta(pos) {
   const cartaInfo = cartasEmJogo[pos];
   const overlay = document.querySelector(".overlay");
+  
+  overlay.classList.remove("escondido");
+  overlay.innerHTML = `
+  <div class="caixa carta-ampliada">
+  <div class="caixa">
+  <div class="botao-fechar">X</div>
+  <img src="assets/${cartaInfo.conteudo}" />
+  </div>
+  </div>
+  `;
+  
+  const fecharBotao = document.querySelector(".botao-fechar");
+  overlay.addEventListener("click", esconderOverlay);
+  fecharBotao.addEventListener("click", esconderOverlay);
+}
+
+function mostrarParFormado(parId) {
+  const parInfo = PARES[parId];
+  const overlay = document.querySelector(".overlay");
 
   overlay.classList.remove("escondido");
   overlay.innerHTML = `
     <div class="caixa carta-ampliada">
       <div class="caixa">
         <div class="botao-fechar">X</div>
-        <img src="assets/${cartaInfo.conteudo}" />
+        <p class="texto-bounce">Par formado!</p>
+        <img src="assets/${parInfo.imagem}" />
+        <h2>${parInfo.texto}</h2>
       </div>
     </div>
   `;
@@ -193,8 +215,11 @@ function esconderOverlay(event) {
   if (event.target != event.currentTarget) return;
 
   const overlay = document.querySelector(".overlay");
+  const fecharBotao = document.querySelector(".botao-fechar");
 
   overlay.classList.add("escondido");
+  overlay.removeEventListener("click", esconderOverlay);
+  fecharBotao.removeEventListener("click", esconderOverlay);
 }
 
 // função atualizarPontuacao(): atualiza a pontuacao quando um jogador acerta um par

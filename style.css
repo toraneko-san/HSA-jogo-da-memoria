@@ -47,6 +47,7 @@ h2 {
 .caixa .caixa {
   border-width: 4px;
   height: 100%;
+  width: 100%;
 }
 
 .caixa.carta-semi-ampliada {
@@ -86,10 +87,15 @@ h2 {
 
 .caixa.carta-ampliada .caixa {
   display: grid;
-  grid-template-rows: 10% 90%;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "par botao"
+    "img ."
+    "texto .";
 }
 
 .botao-fechar {
+  grid-area: botao;
   margin-left: auto;
   padding: 0 20px 10px 20px;
   font-size: 48px;
@@ -102,11 +108,21 @@ h2 {
   transform: scale(1.3);
 }
 
+.caixa.carta-ampliada h2 {
+  grid-area: texto;
+  padding: 10px;
+  text-align: center;
+  font-size: 48px;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
 
 img {
+  grid-area: img;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  overflow: hidden;
 }
 
 .jogo {
@@ -213,4 +229,27 @@ img {
 
 .escondido {
   display: none;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    font-weight: bold;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.texto-bounce {
+  grid-area: par;
+  text-align: center;
+  font-size: 48px;
+  color: #408f8a;
+  animation: bounce;
+  animation-duration: 1s;
+  animation-timing-function: linear;
 }
