@@ -75,6 +75,14 @@ function carregarCartas() {
 
     if (carta.tipo == "imagem") {
       // inserir uma imagem no verso
+      tabuleiro.innerHTML += `
+        <div class="carta">
+          <div class="carta-virada">
+            <div class="frente"><p class="numero-borda">${i + 1}</p></div>
+            <div class="verso"><img src="assets/${carta.conteudo}"/></div>
+          </div>
+        </div>
+      `;
     } else {
       // inserir um texto no verso
       // classe no número para a borda e fundo

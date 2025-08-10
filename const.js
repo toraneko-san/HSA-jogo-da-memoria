@@ -1,14 +1,10 @@
 export const PARES = [
   {
-    texto: "ABCDE...",
-    imagem: "img-fundo.png",
+    texto: "vertical",
+    imagem: "teste-vertical.jpg",
   },
   {
-    texto: "12345...",
-    imagem: "img-fundo.png",
+    texto: "horizontal",
+    imagem: "teste-horizontal.jpg",
   },
-  {
-    texto: "ABCDE...",
-    imagem: "img-fundo.png",
-  }
 ];
