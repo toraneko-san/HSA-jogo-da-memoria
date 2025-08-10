@@ -27,7 +27,41 @@ h2 {
 .controles {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 10px;
+  gap: 40px;
+}
+
+.jogadores {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.caixa {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: white;
+}
+
+.caixa .caixa {
+  border-width: 4px;
+  height: 100%;
+}
+
+.caixa.img-semi-ampliada {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .jogo {
@@ -94,12 +128,6 @@ h2 {
   padding: 10px;
   color: black;
   font-weight: bold;
-}
-
-.verso img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
 }
 
 .numero-borda {

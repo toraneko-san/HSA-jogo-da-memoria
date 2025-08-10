@@ -102,6 +102,15 @@ function carregarCartas() {
   cartasInseridas.forEach((el, index) => {
     el.addEventListener("click", () => virarCarta(index));
   });
+
+  cartasInseridas.forEach((el, index) => {
+    const cartaInfo = cartasEmJogo[index];
+
+    if (cartaInfo.tipo == "imagem") {
+      el.addEventListener("mouseover", () => semiAmpliarCarta(index));
+      el.addEventListener("mouseout", carregarJogadores);
+    }
+  });
 }
 
 // função virarCarta(): vira a carta quando o jogador seleciona uma carta
@@ -116,7 +125,7 @@ function virarCarta(pos) {
   if (cartaEl.classList.contains("ativa") || cartasViradas.length === 2) return;
 
   cartaEl.classList.add("ativa");
-  cartasViradas.push({ info: cartaInfo, el: cartaEl });
+  cartasViradas.push({ info: {...cartaInfo, id: pos}, el: cartaEl });
 
   if (cartasViradas.length === 2) {
     const [c1, c2] = cartasViradas;
@@ -138,6 +147,22 @@ function virarCarta(pos) {
     // revelar botão "Próximo jogador"
     ////
   }
+}
+
+// função semiAmpliarCarta()
+function semiAmpliarCarta(pos) {
+  const cartaInfo = cartasEmJogo[pos];
+
+  cartasViradas.forEach((item) => {
+    if (item.el.classList.contains("ativa") && item.info.id == pos) {
+      document.querySelector(".jogadores").innerHTML = `
+      <div class="caixa img-semi-ampliada">
+        <div class="caixa">
+          <img src="assets/${cartaInfo.conteudo}" alt="" />
+        </div>
+      </div>`;
+    }
+  });
 }
 
 // função atualizarPontuacao(): atualiza a pontuacao quando um jogador acerta um par
