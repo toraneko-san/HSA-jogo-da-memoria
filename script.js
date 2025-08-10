@@ -173,7 +173,7 @@ function semiAmpliarCarta(pos) {
       document.querySelector(".jogadores").innerHTML = `
       <div class="caixa carta-semi-ampliada">
         <div class="caixa">
-          <img src="assets/${cartaInfo.conteudo}" />
+          <img src="assets/${cartaInfo.conteudo}" alt="${cartaInfo.conteudo}" />
         </div>
       </div>`;
     }

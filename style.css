@@ -175,13 +175,15 @@ img {
   border-radius: 10px;
   color: white;
   font-weight: bold; /*para deixar em negrito igual no design*/
+  font-size: 24px;
+  text-align: center;
   background-color: #408f8a;
   cursor: pointer;
 }
 
 .frente:hover {
   background-color: #006a6a; /*mudar cor*/
-  transform: scale(1.01);
+  transform: scale(1.05);
 }
 
 .verso {
