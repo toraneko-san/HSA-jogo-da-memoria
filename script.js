@@ -82,8 +82,8 @@ function embaralharCartas() {
 // só é chamada no começo do jogo
 function carregarCartas() {
   // selecionar o tabuleiro
-  const tabuleiro = document.querySelector(".tabuleiro");
-  tabuleiro.innerHTML = "";
+  const jogoEl = document.querySelector(".jogo");
+  let cartas = "";
 
   // mostrar as cartas
   for (let i = 0; i < cartasEmJogo.length; i++) {
@@ -91,7 +91,7 @@ function carregarCartas() {
 
     if (carta.tipo == "imagem") {
       // inserir uma imagem no verso
-      tabuleiro.innerHTML += `
+      cartas += `
         <div class="carta">
           <div class="carta-virada">
             <div class="frente"><p class="numero-borda">${i + 1}</p></div>
@@ -102,7 +102,7 @@ function carregarCartas() {
     } else {
       // inserir um texto no verso
       // classe no número para a borda e fundo
-      tabuleiro.innerHTML += `
+      cartas += `
         <div class="carta">
           <div class="carta-virada">
             <div class="frente"><p class="numero-borda">${i + 1}</p></div>
@@ -112,6 +112,8 @@ function carregarCartas() {
       `;
     }
   }
+
+  jogoEl.innerHTML = `<section class="tabuleiro">${cartas}</section>`;
 
   // adicionar função virarCarta() às cartas
   const cartasInseridas = document.querySelectorAll(".carta");
