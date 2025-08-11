@@ -239,6 +239,50 @@ img {
   transition: opacity 0.5s ease;
 }
 
+.resultado {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.resultado h2 {
+  text-align: center;
+  font-size: 56px;
+  color: #408f8a;
+  animation: bounce;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.resultado > div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, 45%);
+  gap: 10px;
+  overflow-y: scroll;
+  height: 600px;
+  padding: 10px;
+}
+
+.resultado >  div > .caixa:hover {
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
+
+.resultado .caixa .caixa {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "texto" "img";
+}
+
+.resultado p {
+  grid-area: texto;
+  text-align: center;
+  font-size: 32px;
+  text-decoration: underline;
+}
+
 /* deixar essas classes no final do arquivo */
 @media (max-width: 992px) {
   .conteudo {

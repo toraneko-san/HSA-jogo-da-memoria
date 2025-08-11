@@ -228,7 +228,8 @@ function ampliarCarta(pos) {
   fecharBotao.addEventListener("click", esconderOverlay);
 }
 
-function mostrarParFormado(parId) {
+function mostrarParFormado(parId, jogo = true) {
+  console.log("oi")
   const parInfo = PARES[parId];
   const overlay = document.querySelector(".overlay");
 
@@ -237,7 +238,7 @@ function mostrarParFormado(parId) {
     <div class="caixa carta-ampliada">
       <div class="caixa">
         <div class="botao-fechar">X</div>
-        <p class="texto-bounce">Par formado!</p>
+        <p class="texto-bounce">${jogo ? "Par formado!" : ""}</p>
         <img src="assets/${parInfo.imagem}" />
         <h2>${parInfo.texto}</h2>
       </div>
@@ -288,6 +289,38 @@ function passarTurno() {
 function mostrarResultado() {
   jogadorAtual = null;
   carregarJogadores();
+
+  let posVencedor = 0;
+
+  for (let i = 1; i < jogadores.length; i++) {
+    const { pontuacao } = jogadores[i];
+    if (pontuacao > jogadores[posVencedor].pontuacao) {
+      posVencedor = i;
+    }
+  }
+
+  let pares = PARES.map(
+    (par) => `
+    <div class="caixa">
+      <div class="caixa">
+        <p>${par.texto}</p>
+        <img src="assets/${par.imagem}" alt="${par.imagem}" />
+      </div>
+    </div>
+  `
+  );
+
+  document.querySelector(".jogo").innerHTML = `
+    <div class="resultado">
+      <h2>Vencedor: <u>${jogadores[posVencedor].nome}</u></h2>
+      <div>${pares.join("")}</div>
+    </div>
+  `;
+
+  document.querySelectorAll(".resultado > div > .caixa").forEach((el, index) => {
+    el.addEventListener("click", () => mostrarParFormado(index, false))
+  })
+
 
   document.querySelector(".botoes").innerHTML = `
     <button class="botao botao-reiniciar">REINICIAR</button>
