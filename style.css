@@ -44,6 +44,10 @@ h2 {
   background-color: #2c6556;
 }
 
+.verde-claro {
+  background-color: #6ec007;
+}
+
 .botao:hover {
   transform: scale(1.05);
   cursor: pointer;
@@ -57,7 +61,7 @@ h2 {
 }
 
 .jogadores pre {
-  font-size: 32px;
+  font-size: 24px;
 }
 
 .caixa {
@@ -260,11 +264,11 @@ img {
   grid-template-rows: repeat(5, 60%);
   gap: 10px;
   overflow-y: scroll;
-  height: 500px;
+  height: 400px;
   padding: 10px;
 }
 
-.resultado >  div > .caixa:hover {
+.resultado > div > .caixa:hover {
   transform: scale(1.01);
   cursor: pointer;
 }

@@ -8,16 +8,16 @@ let jogadores = [
 ];
 
 let jogadorAtual;
+let formouPar = false;
 
 let cartasEmJogo = [];
 let cartasViradas = [];
 
 // função iniciarJogo(): inicia o jogo quando o jogador clicar no botão "Jogar"
-function iniciarJogo() {
-  // mostrarResultado();
-
+function iniciarJogo() {  
   jogadores = jogadores.map((jogador) => ({ ...jogador, pontuacao: 0 }));
   jogadorAtual = 0;
+  formouPar = false;
   cartasEmJogo = [];
   cartasViradas = [];
 
@@ -161,6 +161,8 @@ function virarCarta(pos) {
     // P.S.: se não fomrar par, as cartas vão ser desviradas quando passar turno
     if (c1.info.parId === c2.info.parId) {
       jogadores[jogadorAtual].pontuacao += 1;
+
+      formouPar = !formouPar;
       // par feito
       setTimeout(() => {
         c1.el.classList.add("carta-pareada");
@@ -180,11 +182,17 @@ function virarCarta(pos) {
         setTimeout(mostrarResultado, 1000);
         return;
       }
+    } else {
+      formouPar = false;
     }
 
     // revelar botão "Próximo jogador"
     setTimeout(() => {
-      document.querySelector(".botoes").innerHTML = `
+      document.querySelector(".botoes").innerHTML = formouPar
+        ? `
+        <button class="botao botao-proximo verde-claro">MAIS UMA TENTATIVA</button>
+      `
+        : `
         <button class="botao botao-proximo">PRÓX. JOGADOR</button>
       `;
 
@@ -276,7 +284,9 @@ function passarTurno() {
   cartasViradas = [];
 
   // passar o turno para o próximo jogador
-  if (jogadorAtual < 3) {
+  if (formouPar) {
+    jogadorAtual = jogadorAtual;
+  } else if (jogadorAtual < 3) {
     jogadorAtual += 1;
   } else {
     jogadorAtual = 0;
