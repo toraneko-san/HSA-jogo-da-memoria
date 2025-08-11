@@ -14,16 +14,16 @@ export const PARES = [
     imagem: "redescentralizar.png",
     referenica: ""
   },
-  {
-    texto: "Imobilidade Urbana",
-    imagem: "img imobilidade-urbana",
-    referenica: ""
-  },
-  {
-    texto: "Abandono Social",
-    imagem: "img abandono-social",
-    referenica: ""
-  },
+  // {
+  //   texto: "Imobilidade Urbana",
+  //   imagem: "img imobilidade-urbana",
+  //   referenica: ""
+  // },
+  // {
+  //   texto: "Abandono Social",
+  //   imagem: "img abandono-social",
+  //   referenica: ""
+  // },
   // {
   //   texto: "Medicalização",
   //   imagem: "img medicalizacao",

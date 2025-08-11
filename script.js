@@ -14,6 +14,8 @@ let cartasViradas = [];
 
 // função iniciarJogo(): inicia o jogo quando o jogador clicar no botão "Jogar"
 function iniciarJogo() {
+  // mostrarResultado();
+
   jogadores = jogadores.map((jogador) => ({ ...jogador, pontuacao: 0 }));
   jogadorAtual = 0;
   cartasEmJogo = [];
@@ -229,7 +231,7 @@ function ampliarCarta(pos) {
 }
 
 function mostrarParFormado(parId, jogo = true) {
-  console.log("oi")
+  console.log("oi");
   const parInfo = PARES[parId];
   const overlay = document.querySelector(".overlay");
 
@@ -290,12 +292,16 @@ function mostrarResultado() {
   jogadorAtual = null;
   carregarJogadores();
 
-  let posVencedor = 0;
+  let posVencedor = [];
+  let maiorPontuacao = -1;
 
-  for (let i = 1; i < jogadores.length; i++) {
+  for (let i = 0; i < jogadores.length; i++) {
     const { pontuacao } = jogadores[i];
-    if (pontuacao > jogadores[posVencedor].pontuacao) {
-      posVencedor = i;
+    if (pontuacao > maiorPontuacao) {
+      posVencedor = [i];
+      maiorPontuacao = pontuacao;
+    } else if (pontuacao === maiorPontuacao) {
+      posVencedor.push(i);
     }
   }
 
@@ -312,15 +318,18 @@ function mostrarResultado() {
 
   document.querySelector(".jogo").innerHTML = `
     <div class="resultado">
-      <h2>Vencedor: <u>${jogadores[posVencedor].nome}</u></h2>
+      <h2>Vencedor:</br> <u>Jogador ${posVencedor
+        .map((pos) => pos + 1)
+        .join(" + ")}</u></h2>
       <div>${pares.join("")}</div>
     </div>
   `;
 
-  document.querySelectorAll(".resultado > div > .caixa").forEach((el, index) => {
-    el.addEventListener("click", () => mostrarParFormado(index, false))
-  })
-
+  document
+    .querySelectorAll(".resultado > div > .caixa")
+    .forEach((el, index) => {
+      el.addEventListener("click", () => mostrarParFormado(index, false));
+    });
 
   document.querySelector(".botoes").innerHTML = `
     <button class="botao botao-reiniciar">REINICIAR</button>

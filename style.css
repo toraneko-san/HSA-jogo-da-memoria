@@ -257,10 +257,10 @@ img {
 .resultado > div {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(5, 45%);
+  grid-template-rows: repeat(5, 60%);
   gap: 10px;
   overflow-y: scroll;
-  height: 600px;
+  height: 500px;
   padding: 10px;
 }
 
@@ -269,10 +269,10 @@ img {
   cursor: pointer;
 }
 
-
 .resultado .caixa .caixa {
   display: grid;
   grid-template-rows: auto 1fr;
+  gap: 5px;
   grid-template-areas: "texto" "img";
 }
 
