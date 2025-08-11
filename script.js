@@ -4,7 +4,7 @@ let jogadores = [
   { nome: "Jogador 1", cor: "#408f8a", pontuacao: 0 },
   { nome: "Jogador 2", cor: "#000000", pontuacao: 0 },
   { nome: "Jogador 3", cor: "#34a203", pontuacao: 0 },
-  { nome: "Jogador 4", cor: "737373", pontuacao: 0 },
+  { nome: "Jogador 4", cor: "#737373", pontuacao: 0 },
 ];
 
 let jogadorAtual;
@@ -173,24 +173,21 @@ function virarCarta(pos) {
       );
 
       if (numParesFormados == PARES.length) {
-        document.querySelector(".botoes").innerHTML = `
-          <button class="botao-fim">FIM DO JOGO!</button>
-        `;
-
-        mostrarResultado();
+        setTimeout(mostrarResultado, 1000);
         return;
       }
     }
 
     // revelar botão "Próximo jogador"
-    document.querySelector(".botoes").innerHTML = `
-      <button class="botao-proximo">PRÓX. JOGADOR</button>
-    `;
+    setTimeout(() => {
+      document.querySelector(".botoes").innerHTML = `
+        <button class="botao botao-proximo">PRÓX. JOGADOR</button>
+      `;
 
-    document
-      .querySelector(".botao-proximo")
-      .addEventListener("click", passarTurno);
-    ////
+      document
+        .querySelector(".botao-proximo")
+        .addEventListener("click", passarTurno);
+    }, 1000);
   }
 }
 
@@ -291,7 +288,8 @@ function mostrarResultado() {
   carregarJogadores();
 
   document.querySelector(".botoes").innerHTML = `
-    <button class="botao-reiniciar">REINICIAR</button>
+    <button class="botao botao-reiniciar">REINICIAR</button>
+    
   `;
 
   document
