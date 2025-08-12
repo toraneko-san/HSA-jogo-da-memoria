@@ -13,18 +13,18 @@ export const PARES = [
   {
     texto: "Redescentralização",
     imagem: "redescentralizacao.jpg",
-    referencia: "Joaquín Torres García (1878-1949)",
+    referencia: "Desenho de Joaquín Torres García (1943)",
   },
-  // {
-  //   texto: "(I)mobilidade Urbana",
-  //   imagem: "img imobilidade-urbana",
-  //   referencia: ""
-  // },
-  // {
-  //   texto: "Abandono Social",
-  //   imagem: "img abandono-social",
-  //   referencia: ""
-  // },
+  {
+    texto: "(I)mobilidade Urbana",
+    imagem: "imobilidade-urbana.jpg",
+    referencia: "Foto tirada pela jornalista Rovena Rosa/Agência Brasil"
+  },
+  {
+    texto: "Abandono Social",
+    imagem: "abandono-social.jpg",
+    referencia: "Fotografia do jornalista Mauro Sampaio no livro 'Abandono' (2020)"
+  },
   {
     texto: "Medicalização",
     imagem: "medicalizacao.jpg",
