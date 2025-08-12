@@ -238,7 +238,7 @@ function ampliarCarta(pos) {
   fecharBotao.addEventListener("click", esconderOverlay);
 }
 
-function mostrarParFormado(parId, jogo = true) {
+function mostrarParFormado(parId, emJogo = true) {
   console.log("oi");
   const parInfo = PARES[parId];
   const overlay = document.querySelector(".overlay");
@@ -248,9 +248,10 @@ function mostrarParFormado(parId, jogo = true) {
     <div class="caixa carta-ampliada">
       <div class="caixa">
         <div class="botao-fechar">X</div>
-        <p class="texto-bounce">${jogo ? "Par formado!" : ""}</p>
-        <img src="assets/${parInfo.imagem}" />
+        <p class="texto-bounce">${emJogo ? "Par formado!" : ""}</p>
         <h2>${parInfo.texto}</h2>
+        <img src="assets/${parInfo.imagem}" />
+        <p class="fonte"><b>Fonte:</b> ${parInfo.referencia}</p>
       </div>
     </div>
   `;

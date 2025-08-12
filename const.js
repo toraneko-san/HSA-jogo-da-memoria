@@ -2,51 +2,52 @@ export const PARES = [
   {
     texto: "Arquitetura Hostil",
     imagem: "arquitetura-hostil.png",
-    referenica: ""
-  },
-  {
-    texto: "Coletivos de Resistência",
-    imagem: "coletivo-resistencia.jpg",
-    referenica: ""
-  },
-  {
-    texto: "Redescentralizar São Paulo",
-    imagem: "redescentralizar.png",
-    referenica: ""
+    referencia: "Reprodução",
   },
   // {
-  //   texto: "Imobilidade Urbana",
+  //   texto: "Serviços Ecossistêmicos",
+  //   imagem: "servico-ecossistemico.jpg",
+  //   referencia: ""
+  // },
+  // {
+  //   texto: "Redescentralizar São Paulo",
+  //   imagem: "redescentralizar.png",
+  //   referencia: ""
+  // },
+  // {
+  //   texto: "(I)mobilidade Urbana",
   //   imagem: "img imobilidade-urbana",
-  //   referenica: ""
+  //   referencia: ""
   // },
   // {
   //   texto: "Abandono Social",
   //   imagem: "img abandono-social",
-  //   referenica: ""
+  //   referencia: ""
   // },
-  // {
-  //   texto: "Medicalização",
-  //   imagem: "img medicalizacao",
-  //   referenica: ""
-  // },
-  // {
-  //   texto: "Cidadania Insurgente e Transgressiva",
-  //   imagem: "img cidadania-insurgente-transgressiva",
-  //   referenica: ""
-  // },
-  // {
-  //   texto: "Resistência e Resiliência",
-  //   imagem: "img resistencia-resiliencia",
-  //   referenica: ""
-  // },
+  {
+    texto: "Medicalização",
+    imagem: "medicalizacao.jpg",
+    referencia: "",
+  },
+  {
+    texto: "Cidadania Insurgente e Transgressiva",
+    imagem: "cidadania-insurgente-transgressiva.jpg",
+    referencia:
+      "Nós, mulheres da periferia (2017) – https://nosmulheresdaperiferia.com.br/no-grajau-sarau-discute-diversidade-sexual-das-mulheres-na-quebrada",
+  },
+  {
+    texto: "Resistência e Resiliência",
+    imagem: "resistencia-resiliencia.png",
+    referencia: "",
+  },
   // {
   //   texto: "Segregação territorial",
   //   imagem: "img segregacao-territorial",
-  //   referenica: ""
+  //   referencia: ""
   // },
   // {
   //   texto: "?",
   //   imagem: "img ?",
-  //   referenica: ""
+  //   referencia: ""
   // },
 ];
