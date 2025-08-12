@@ -218,7 +218,7 @@ img {
 
 .verso {
   transform: rotateY(180deg);
-  justify-content: flex-start;
+  text-align: center;
   cursor: zoom-in;
   background-color: white;
   border: 3px solid #408f8a;

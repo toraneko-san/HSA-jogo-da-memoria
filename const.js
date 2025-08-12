@@ -5,11 +5,11 @@ export const PARES = [
     referencia:
       "https://www.cnnbrasil.com.br/politica/bolsonaro-veta-lei-padre-julio-lancellotti-que-proibe-construcoes-hostis-a-populacao-de-rua/",
   },
-  // {
-  //   texto: "Serviços Ecossistêmicos",
-  //   imagem: "servico-ecossistemico.jpg",
-  //   referencia: ""
-  // },
+  {
+    texto: "Serviços Ecossistêmicos",
+    imagem: "servicos-ecossistemicos.png",
+    referencia: "https://greenviewgv.com.br/valoracao-economica-de-servicos-ecossistemicos/"
+  },
   {
     texto: "Redescentralização",
     imagem: "redescentralizacao.jpg",
@@ -39,7 +39,7 @@ export const PARES = [
   {
     texto: "Resistência e Resiliência",
     imagem: "resistencia-resiliencia.png",
-    referencia: "",
+    referencia: "https://sebraepr.com.br/comunidade/artigo/resiliencia-em-tempos-de-crise",
   },
   {
     texto: "Segregação territorial",
@@ -49,6 +49,6 @@ export const PARES = [
   {
     texto: "Saúde global",
     imagem: "saude-global.png",
-    referencia: "",
+    referencia: "https://ciclovivo.com.br/vida-sustentavel/bem-estar/cientistas-pedem-grande-transicao-pela-saude-global/",
   },
 ];
