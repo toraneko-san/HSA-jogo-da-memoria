@@ -51,4 +51,29 @@ export const PARES = [
     imagem: "saude-global.png",
     referencia: "https://ciclovivo.com.br/vida-sustentavel/bem-estar/cientistas-pedem-grande-transicao-pela-saude-global/",
   },
+  {
+    texto: "11",
+    imagem: "11.png",
+    referencia: ""
+  },
+  {
+    texto: "11",
+    imagem: "11.png",
+    referencia: ""
+  },
+  {
+    texto: "11",
+    imagem: "11.png",
+    referencia: ""
+  },
+  {
+    texto: "11",
+    imagem: "11.png",
+    referencia: ""
+  },
+  {
+    texto: "11",
+    imagem: "11.png",
+    referencia: ""
+  },
 ];

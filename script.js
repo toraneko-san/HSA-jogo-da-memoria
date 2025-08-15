@@ -14,7 +14,7 @@ let cartasEmJogo = [];
 let cartasViradas = [];
 
 // função iniciarJogo(): inicia o jogo quando o jogador clicar no botão "Jogar"
-function iniciarJogo() {  
+function iniciarJogo() {
   jogadores = jogadores.map((jogador) => ({ ...jogador, pontuacao: 0 }));
   jogadorAtual = 0;
   formouPar = false;
@@ -42,7 +42,12 @@ function carregarJogadores() {
   let texto = "";
   jogadores.forEach((jogador, index) => {
     let ativo = index === jogadorAtual ? ">" : "";
-    texto += `<pre style="color: ${jogador.cor}">${ativo} ${jogador.nome}     Pontuação: ${jogador.pontuacao}</pre>`;
+    texto += `
+      <div class="jogador">
+        <pre style="color: ${jogador.cor}">${ativo}</pre>
+        <pre style="color: ${jogador.cor}">${jogador.nome} <br>Pontuação: ${jogador.pontuacao}</pre>
+      </div>
+    `;
   });
 
   container.innerHTML = `
@@ -124,12 +129,8 @@ function carregarCartas() {
   });
 
   cartasInseridas.forEach((el, index) => {
-    const cartaInfo = cartasEmJogo[index];
-
-    if (cartaInfo.tipo == "imagem") {
-      el.addEventListener("mouseover", () => semiAmpliarCarta(index));
-      el.addEventListener("mouseout", carregarJogadores);
-    }
+    el.addEventListener("mouseover", () => semiAmpliarCarta(index));
+    el.addEventListener("mouseout", carregarJogadores);
   });
 }
 
@@ -208,11 +209,18 @@ function semiAmpliarCarta(pos) {
   const cartaInfo = cartasEmJogo[pos];
 
   cartasViradas.forEach((item) => {
-    if (item.el.classList.contains("ativa") && item.info.id == pos) {
+    if (item.info.id == pos && item.info.tipo == "imagem") {
       document.querySelector(".jogadores").innerHTML = `
       <div class="caixa carta-semi-ampliada">
         <div class="caixa">
           <img src="assets/${cartaInfo.conteudo}" alt="${cartaInfo.conteudo}" />
+        </div>
+      </div>`;
+    } else if (item.info.id == pos && item.info.tipo == "texto") {
+      document.querySelector(".jogadores").innerHTML = `
+      <div class="caixa carta-semi-ampliada">
+        <div class="caixa">
+          ${cartaInfo.conteudo}
         </div>
       </div>`;
     }
