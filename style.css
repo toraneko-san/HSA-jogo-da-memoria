@@ -55,21 +55,11 @@ h2 {
   cursor: pointer;
 }
 
-.jogadores {
-  position: relative;
+.carta-semi {
+  position: grid;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-}
-
-.jogador {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.jogadores pre {
-  font-size: 28px;
 }
 
 .caixa {
@@ -86,7 +76,6 @@ h2 {
 }
 
 .caixa.carta-semi-ampliada {
-  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -292,7 +281,7 @@ img {
   grid-template-rows: repeat(5, 60%);
   gap: 10px;
   overflow-y: scroll;
-  height: 400px;
+  height: 550px;
   padding: 10px;
 }
 

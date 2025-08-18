@@ -1,63 +1,23 @@
 import { PARES } from "./const.js";
 
-let jogadores = [
-  { nome: "Jogador 1", cor: "#408f8a", pontuacao: 0 },
-  { nome: "Jogador 2", cor: "#000000", pontuacao: 0 },
-  { nome: "Jogador 3", cor: "#34a203", pontuacao: 0 },
-  { nome: "Jogador 4", cor: "#737373", pontuacao: 0 },
-];
-
-let jogadorAtual;
-let formouPar = false;
-
 let cartasEmJogo = [];
 let cartasViradas = [];
+let numParesFormados = null;
 
 // função iniciarJogo(): inicia o jogo quando o jogador clicar no botão "Jogar"
 function iniciarJogo() {
-  jogadores = jogadores.map((jogador) => ({ ...jogador, pontuacao: 0 }));
-  jogadorAtual = 0;
-  formouPar = false;
   cartasEmJogo = [];
   cartasViradas = [];
+  numParesFormados = 0;
 
-  carregarJogadores();
   carregarTabuleiro();
-
+  
   document.querySelector(".botoes").innerHTML = "";
 }
 
 // quando clicar no botão "Jogar", chamar função iniciarJogo()
 document.querySelector(".botao-jogar").addEventListener("click", iniciarJogo);
 ////
-
-// função carregarJogadores(): prepara a seção "jogadores" quando o site carregar
-// e atualiza pontuação durante o jogo
-function carregarJogadores() {
-  if (jogadorAtual === undefined) return;
-
-  let container = document.querySelector(".jogadores");
-  container.innerHTML = "";
-
-  let texto = "";
-  jogadores.forEach((jogador, index) => {
-    let ativo = index === jogadorAtual ? ">" : "";
-    texto += `
-      <div class="jogador">
-        <pre style="color: ${jogador.cor}">${ativo}</pre>
-        <pre style="color: ${jogador.cor}">${jogador.nome} <br>Pontuação: ${jogador.pontuacao}</pre>
-      </div>
-    `;
-  });
-
-  container.innerHTML = `
-    <div class="caixa">
-      <div class="caixa">
-        ${texto}
-      </div>
-    </div>
-  `;
-}
 
 function carregarTabuleiro() {
   embaralharCartas();
@@ -130,13 +90,15 @@ function carregarCartas() {
 
   cartasInseridas.forEach((el, index) => {
     el.addEventListener("mouseover", () => semiAmpliarCarta(index));
-    el.addEventListener("mouseout", carregarJogadores);
+    el.addEventListener("mouseout", () => {
+      document.querySelector(".carta-semi").innerHTML = "";
+    });
   });
 }
 
 // função virarCarta(): vira a carta quando o jogador seleciona uma carta
 function virarCarta(pos) {
-  if (jogadorAtual == null) return;
+  if (numParesFormados == null) return;
 
   const cartaInfo = cartasEmJogo[pos];
   const cartaEl = document.querySelectorAll(".carta")[pos];
@@ -161,40 +123,26 @@ function virarCarta(pos) {
     // se formar par, as cartas não vão estar mais visíveis
     // P.S.: se não fomrar par, as cartas vão ser desviradas quando passar turno
     if (c1.info.parId === c2.info.parId) {
-      jogadores[jogadorAtual].pontuacao += 1;
-
-      formouPar = !formouPar;
       // par feito
       setTimeout(() => {
         c1.el.classList.add("carta-pareada");
         c2.el.classList.add("carta-pareada");
         mostrarParFormado(c1.info.parId);
-        carregarJogadores();
       }, 1000);
 
       // checar se todos os pares foram encontrados
       // se tiver, revelar botão "Fim do Jogo"
-      const numParesFormados = jogadores.reduce(
-        (soma, jogador) => soma + jogador.pontuacao,
-        0
-      );
+      numParesFormados++
 
       if (numParesFormados == PARES.length) {
         setTimeout(mostrarResultado, 1000);
         return;
       }
-    } else {
-      formouPar = false;
-    }
-
-    // revelar botão "Próximo jogador"
+    } 
+    // revelar botão "PRÓX. JOGADA"
     setTimeout(() => {
-      document.querySelector(".botoes").innerHTML = formouPar
-        ? `
-        <button class="botao botao-proximo verde-claro">MAIS UMA TENTATIVA</button>
-      `
-        : `
-        <button class="botao botao-proximo">PRÓX. JOGADOR</button>
+      document.querySelector(".botoes").innerHTML = `
+        <button class="botao botao-proximo verde-claro">PRÓX. JOGADA</button>
       `;
 
       document
@@ -210,14 +158,14 @@ function semiAmpliarCarta(pos) {
 
   cartasViradas.forEach((item) => {
     if (item.info.id == pos && item.info.tipo == "imagem") {
-      document.querySelector(".jogadores").innerHTML = `
+      document.querySelector(".carta-semi").innerHTML = `
       <div class="caixa carta-semi-ampliada">
         <div class="caixa">
           <img src="assets/${cartaInfo.conteudo}" alt="${cartaInfo.conteudo}" />
         </div>
       </div>`;
     } else if (item.info.id == pos && item.info.tipo == "texto") {
-      document.querySelector(".jogadores").innerHTML = `
+      document.querySelector(".carta-semi").innerHTML = `
       <div class="caixa carta-semi-ampliada">
         <div class="caixa">
           ${cartaInfo.conteudo}
@@ -292,38 +240,11 @@ function passarTurno() {
   // deletar lista com as cartas viradas
   cartasViradas = [];
 
-  // passar o turno para o próximo jogador
-  if (formouPar) {
-    jogadorAtual = jogadorAtual;
-  } else if (jogadorAtual < 3) {
-    jogadorAtual += 1;
-  } else {
-    jogadorAtual = 0;
-  }
-
-  carregarJogadores();
-
   // esconder o botão "Próx. Jogador"
   document.querySelector(".botoes").innerHTML = "";
 }
 
 function mostrarResultado() {
-  jogadorAtual = null;
-  carregarJogadores();
-
-  let posVencedor = [];
-  let maiorPontuacao = -1;
-
-  for (let i = 0; i < jogadores.length; i++) {
-    const { pontuacao } = jogadores[i];
-    if (pontuacao > maiorPontuacao) {
-      posVencedor = [i];
-      maiorPontuacao = pontuacao;
-    } else if (pontuacao === maiorPontuacao) {
-      posVencedor.push(i);
-    }
-  }
-
   let pares = PARES.map(
     (par) => `
     <div class="caixa">
@@ -337,9 +258,7 @@ function mostrarResultado() {
 
   document.querySelector(".jogo").innerHTML = `
     <div class="resultado">
-      <h2>Vencedor:</br> <u>Jogador ${posVencedor
-        .map((pos) => pos + 1)
-        .join(" + ")}</u></h2>
+      <h2>Fim do Jogo!</h2>
       <div>${pares.join("")}</div>
     </div>
   `;
