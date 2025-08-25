@@ -207,7 +207,6 @@ function mostrarParFormado(parId, emJogo = true) {
         <p class="texto-bounce">${emJogo ? "Par formado!" : ""}</p>
         <h2>${parInfo.texto}</h2>
         <img src="assets/${parInfo.imagem}" />
-        <p class="fonte"><b>Fonte:</b> ${parInfo.referencia}</p>
       </div>
     </div>
   `;
