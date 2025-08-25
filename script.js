@@ -244,6 +244,8 @@ function passarTurno() {
 }
 
 function mostrarResultado() {
+  document.querySelector(".carta-semi").innerHTML = "";
+
   let pares = PARES.map(
     (par) => `
     <div class="caixa">
